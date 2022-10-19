@@ -1,0 +1,171 @@
+<Project>
+  <Name>Companhia Aerea</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Companhia Aerea</Name>
+    <Language>Java</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>Trecho</Name>
+        <Access>Public</Access>
+        <Location left="444" top="10" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private String codigo</Member>
+        <Member type="Field">private String origem</Member>
+        <Member type="Field">private String destino</Member>
+        <Member type="Method">public String toString()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Voo</Name>
+        <Access>Public</Access>
+        <Location left="64" top="10" />
+        <Size width="231" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private Trecho trecho</Member>
+        <Member type="Field">private Date data</Member>
+        <Member type="Field">private double valorBase</Member>
+        <Member type="Method">public double valorBase()</Member>
+        <Member type="Method">public String toString()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Bilhete</Name>
+        <Access>Public</Access>
+        <Location left="272" top="334" />
+        <Size width="292" height="264" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">protected String codBilhete</Member>
+        <Member type="Field">protected double preco</Member>
+        <Member type="Field">protected Date data</Member>
+        <Member type="Field">protected List&lt;Voo&gt; reservas</Member>
+        <Member type="Field">protected final double ACRESCIMO_VOO = 0.1</Member>
+        <Member type="Field">protected final double ACRESCIMO_DIVERSOS_VOO = 0.5</Member>
+        <Member type="Method">protected abstract double calcularPreco()</Member>
+        <Member type="Method">public String descricao()</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Comment">
+        <Text>Programa fidelidade de pontos baseado em preços e categoria
+
+fidelidade:
+a cada 500 reais valor bilhete são gerados 500 pts 
+
+Voo:
+Cada voo possui um valor base
+valorbase()
+
+Bilhete:
+
+calculo do preço do bilhete e o valor base do voo com acrecismo 10%
+
+quando for varios voos sera soma do voo mais caro + 50% do preço voos restantes
+
+Bilhetes promocionais: 60% do valor e 50% dos pontos. 
+Bilhetes de fidelidade: não são cobrados e não geram pontos. </Text>
+        <Location left="1008" top="215" />
+        <Size width="274" height="374" />
+      </Entity>
+      <Entity type="Class">
+        <Name>BilheteComun</Name>
+        <Access>Public</Access>
+        <Location left="99" top="683" />
+        <Size width="190" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private int pontos</Member>
+        <Member type="Field">private final int REF_VALOR = 500</Member>
+        <Member type="Method">protected double calcularPreco()</Member>
+        <Member type="Method">public double calcularPontos()</Member>
+        <Member type="Method">public String descricao()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Interface">
+        <Name>Ifidelidade</Name>
+        <Access>Public</Access>
+        <Location left="230" top="980" />
+        <Size width="162" height="111" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">double calcularPontos()</Member>
+      </Entity>
+      <Entity type="Class">
+        <Name>BilhetePromocional</Name>
+        <Access>Public</Access>
+        <Location left="336" top="683" />
+        <Size width="250" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private int pontos</Member>
+        <Member type="Field">private final int REF_VALOR = 500</Member>
+        <Member type="Field">private final double DESCONTO_VALOR_TOTAL = 0.4</Member>
+        <Member type="Field">private final double DESCONTO_PONTOS = 0.5</Member>
+        <Member type="Method">protected double calcularPreco()</Member>
+        <Member type="Method">public double calcularPontos()</Member>
+        <Member type="Method">public String descricao()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>BilheteFidelidade</Name>
+        <Access>Public</Access>
+        <Location left="632" top="683" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">protected double calcularPreco()</Member>
+        <Member type="Method">public String descricao()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Association" first="2" second="1">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Bidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="1" second="0">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Bidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+      </Relationship>
+      <Relationship type="Generalization" first="4" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="5" second="4">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>199</X>
+          <Y>925</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="6" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>418</X>
+          <Y>655</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>418</X>
+          <Y>625</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="5" second="6">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>451</X>
+          <Y>1029</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="7" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>
