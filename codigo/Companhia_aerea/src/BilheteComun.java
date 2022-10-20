@@ -1,7 +1,3 @@
-package companhia_area;
-
-import java.io.*;
-import java.util.*;
 
 public class BilheteComun extends Bilhete {
 

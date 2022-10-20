@@ -1,7 +1,5 @@
-package companhia_area;
-
-import java.io.*;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 public abstract class Bilhete {
 

@@ -1,8 +1,3 @@
-package companhia_area;
-
-import java.io.*;
-import java.util.*;
-
 public class BilhetePromocional extends Bilhete {
 
 	private int pontos;
