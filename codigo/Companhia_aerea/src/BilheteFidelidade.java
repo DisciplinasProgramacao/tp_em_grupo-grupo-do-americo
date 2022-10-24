@@ -1,11 +1,19 @@
+import java.util.Date;
+import java.util.List;
+
 public class BilheteFidelidade extends Bilhete {
 
-	protected double calcularPreco() {
-		throw new UnsupportedOperationException("The method is not implemented yet.");
+	public BilheteFidelidade(String codBilhete, Date data, List<Voo> reservas) {
+		super(codBilhete, data, reservas);
+		//TODO Auto-generated constructor stub
 	}
 
+	protected double calcularPreco() {
+		return (super.preco = 0);
+	}
+	@Override
 	public String descricao() {
-		throw new UnsupportedOperationException("The method is not implemented yet.");
+		return super.descricao();
 	}
 
 }

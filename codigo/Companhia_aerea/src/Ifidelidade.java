@@ -1,5 +1,5 @@
 public interface Ifidelidade {
 
-	double calcularPontos();
+	int calcularPontos();
 
 }

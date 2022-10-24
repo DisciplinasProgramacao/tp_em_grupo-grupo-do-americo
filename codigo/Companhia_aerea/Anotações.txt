@@ -1,0 +1,7 @@
+Usar LocalDateTime.
+
+adicionar um método adicionar voo na classe Bilhete.
+
+criar atributo com qnt de voos na classe Bilhete.
+
+*mudar tipo do método calcularPontos para int.
