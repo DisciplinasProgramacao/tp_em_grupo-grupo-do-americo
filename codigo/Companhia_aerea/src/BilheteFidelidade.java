@@ -1,11 +1,10 @@
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
 
 public class BilheteFidelidade extends Bilhete {
 
-	public BilheteFidelidade(String codBilhete, Date data, List<Voo> reservas) {
-		super(codBilhete, data, reservas);
-		//TODO Auto-generated constructor stub
+	public BilheteFidelidade(String codBilhete, LocalDate data, Voo voo) {
+		super(codBilhete, data, voo);
+		calcularPreco();
 	}
 
 	protected double calcularPreco() {

@@ -1,5 +1,4 @@
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
 
 public class BilhetePromocional extends Bilhete {
 
@@ -7,12 +6,12 @@ public class BilhetePromocional extends Bilhete {
 
 	private int pontos;
 	private final int REF_VALOR = 500;
-	private final double DESCONTO_VALOR_TOTAL = 0.4;
+	private final double DESCONTO_VALOR_TOTAL = 0.6;
 	private final double DESCONTO_PONTOS = 0.5;
 
-	public BilhetePromocional(String codBilhete, Date data, List<Voo> reservas) {
-		super(codBilhete, data, reservas);
-		//TODO Auto-generated constructor stub
+	public BilhetePromocional(String codBilhete, LocalDate data, Voo voo) {
+		super(codBilhete, data, voo);
+		calcularPontos();
 	}
 
 	protected double calcularPreco() {

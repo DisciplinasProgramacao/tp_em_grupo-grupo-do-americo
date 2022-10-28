@@ -1,13 +1,13 @@
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
 
-public class BilheteComun extends Bilhete {
+public class BilheteComum extends Bilhete {
 
 	private int pontos;
 	private final int REF_VALOR = 500;
 
-	public BilheteComun(String codBilhete, Date data, List<Voo> reservas) {
-		super(codBilhete, data, reservas);
+	public BilheteComum(String codBilhete, LocalDate data, Voo voo) {
+		super(codBilhete, data, voo);
+		calcularPontos();
 	}
 
 	protected double calcularPreco() {
@@ -38,7 +38,7 @@ public class BilheteComun extends Bilhete {
 		this.pontos =  ((int) somaPts * this.REF_VALOR);
 		return this.pontos;
 	}
-	@Override
+	
 	public String descricao() {
 		return super.descricao() + "\nPontos Obtidos: " + this.pontos;
 	}

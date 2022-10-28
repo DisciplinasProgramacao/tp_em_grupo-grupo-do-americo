@@ -12,5 +12,8 @@ public class Trecho {
 	public String toString() {
 		return this.codigo +" ("+this.origem+"/"+this.destino +")";
 	}
+	public String getCodigo() {
+		return codigo;
+	}
 
 }

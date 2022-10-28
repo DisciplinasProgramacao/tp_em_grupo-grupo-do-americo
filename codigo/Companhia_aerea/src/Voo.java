@@ -1,17 +1,15 @@
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import java.time.LocalDate;
 
 public class Voo {
 
 	private Trecho trecho;
-	private Date data;
+	private LocalDate data;
 	private double valorBase;
 
-	public Voo(Trecho trecho, String data, double valorBase) throws ParseException  {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	public Voo(Trecho trecho, LocalDate data, double valorBase) {
 		this.trecho = trecho;
-		this.data = sdf.parse(data);
+		this.data = data;
 		this.valorBase = valorBase;
 	}
 
@@ -20,8 +18,10 @@ public class Voo {
 	}
 
 	public String toString() {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
-		return this.trecho.toString() + " - " + sdf.format(this.data);
+		return this.trecho.toString() + " - " + this.data;
+	}
+	public Trecho getTrecho() {
+		return trecho;
 	}
 
 }
