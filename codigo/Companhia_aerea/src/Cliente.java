@@ -19,10 +19,10 @@ public class Cliente{
 
 	}
 	public int verificadorPontos(){
-
+		return 0;
 	}
 	public int calcularPontos(){
-
+		return 0;
 	}
 	public void addAcelerador(IaceleradorPts acelerador){
 
@@ -31,6 +31,4 @@ public class Cliente{
 	public void desativarAcelerador(){
 
 	}
-}
-
 }
