@@ -102,5 +102,4 @@ public class App {
 
         } while (opcao != 0);
     }
-    System.out.println("Hello world");
 }
