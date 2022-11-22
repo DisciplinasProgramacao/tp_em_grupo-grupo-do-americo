@@ -13,8 +13,8 @@ public class BilhetePromocional extends Bilhete {
 		super(codBilhete, data, voo);
 		calcularPontos();
 	}
-
-	protected double calcularPreco() {
+	@Override
+	public double calcularPreco() {
 		if(super.reservas.size() == 1){
 			double acrescimo = reservas.get(0).valorBase() * super.ACRESCIMO_VOO;
 			super.preco = (reservas.get(0).valorBase() + acrescimo) * this.DESCONTO_VALOR_TOTAL;
@@ -36,13 +36,14 @@ public class BilhetePromocional extends Bilhete {
 		}
 		return super.preco;
 	}
-
+	@Override
 	public int calcularPontos() {
 		double somaPts = this.calcularPreco() / this.REF_VALOR;
 		this.pontos =  (int) (((int) somaPts * this.REF_VALOR) * this.DESCONTO_PONTOS);
 		return this.pontos;
 	}
-
+	
+	@Override
 	public String descricao() {
 		return super.descricao() + "\nPontos Obtidos: " + this.pontos;
 	}

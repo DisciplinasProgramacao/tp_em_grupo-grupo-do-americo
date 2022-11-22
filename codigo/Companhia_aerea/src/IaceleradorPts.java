@@ -1,6 +1,6 @@
 public abstract class IaceleradorPts {
 	
-	protected abstract void custoMensal();
-	protected abstract void trocar();
-	protected abstract void desativar();
+	public abstract void custoMensal();
+	public abstract void trocar();
+	public abstract void desativar();
 }

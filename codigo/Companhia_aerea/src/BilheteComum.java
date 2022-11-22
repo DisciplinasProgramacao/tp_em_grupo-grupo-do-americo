@@ -9,8 +9,9 @@ public class BilheteComum extends Bilhete {
 		super(codBilhete, data, voo);
 		calcularPontos();
 	}
-
-	protected double calcularPreco() {
+	
+	@Override
+	public double calcularPreco() {
 		if(super.reservas.size() == 1){
 			double acrescimo = reservas.get(0).valorBase() * super.ACRESCIMO_VOO;
 			super.preco = reservas.get(0).valorBase() + acrescimo;
@@ -32,13 +33,14 @@ public class BilheteComum extends Bilhete {
 		}
 		return super.preco;
 	}
-
+	@Override
 	public int calcularPontos() {
 		double somaPts = this.calcularPreco() / this.REF_VALOR;
 		this.pontos =  ((int) somaPts * this.REF_VALOR);
 		return this.pontos;
 	}
 	
+	@Override
 	public String descricao() {
 		return super.descricao() + "\nPontos Obtidos: " + this.pontos;
 	}

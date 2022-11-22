@@ -6,13 +6,21 @@ public class BilheteFidelidade extends Bilhete {
 		super(codBilhete, data, voo);
 		calcularPreco();
 	}
-
-	protected double calcularPreco() {
+	
+	@Override
+	public double calcularPreco() {
 		return (super.preco = 0);
 	}
 	@Override
 	public String descricao() {
 		return super.descricao();
+	}
+
+	@Override
+	public int calcularPontos() {
+	
+		
+		return 0;
 	}
 
 }

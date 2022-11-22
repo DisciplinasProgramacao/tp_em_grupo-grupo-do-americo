@@ -17,7 +17,8 @@ public abstract class Bilhete {
 		this.reservas.add(voo);
 	}
 
-	protected abstract double calcularPreco();
+	public abstract double calcularPreco();
+	public abstract int calcularPontos();
 
 	public void adicionarVoo(Voo voo) {
 		this.reservas.add(voo);
