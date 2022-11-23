@@ -12,6 +12,7 @@ public class App {
         System.out.println("1 - Bilhete Comum");
         System.out.println("2 - Bilhete Fidelidade");
         System.out.println("3 - Bilhete Promocional");
+        System.out.println("4 - Adicionar Cliente");
         System.out.println("0 - Sair");
     }
     public static String codBilhete() {
@@ -60,9 +61,19 @@ public class App {
 
         return new Voo(trecho, data, valor);
     }
+    public static String cliente() {
+    	 System.out.println("      AeroLine      ");
+         System.out.println("====================");
+         System.out.println("Digite o seu nome:");
+         
+    	
+    	return teclado.next();
+    }
+    
 
     public static void main(String[] args) {
         Bilhete bilhete;
+        Cliente cliente;
         int opcao;
         do {
             menuInicial();
@@ -92,6 +103,16 @@ public class App {
                     System.out.println("Digite qualquer coisa para continuar...");
                     teclado.next();
                     break;
+                    
+                case 4:
+                	  cliente = new Cliente(cliente());
+                	  System.out.println("      AeroLine      ");
+                      System.out.println("====================");
+                      System.out.println(cliente.toString());
+                      System.out.println("Digite qualquer coisa para continuar...");
+                      teclado.next();
+                      break;
+                      
                 case 0:
                     System.out.println("Saindo...");
                     break;

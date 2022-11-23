@@ -16,6 +16,7 @@ public class Cliente{
 		this.nome = nome;
 		this.compras = new ArrayList<Bilhete>();
 		this.pontos = 0;
+		this.totalValorGasto=0;
 	}
 
 	//MÉTODOS
@@ -32,7 +33,13 @@ public class Cliente{
 		return 0;
 	}
 	public int calcularPontos(){
-		return 0;
+		
+		for (Bilhete bilhete : compras) {
+			
+			this.pontos += bilhete.calcularPontos();
+		}
+		
+		return this.pontos;
 	}
 	public void addAcelerador(IaceleradorPts acelerador){
 
@@ -86,5 +93,12 @@ public class Cliente{
 	public int getPERIODO() {
 		return PERIODO;
 	}
+
+	@Override
+	public String toString() {
+		return "Cliente [nome=" + nome + ", compras=" + compras + ", pontos=" + pontos + ", totalValorGasto="
+				+ totalValorGasto + "]";
+	}
+	
 	
 }
