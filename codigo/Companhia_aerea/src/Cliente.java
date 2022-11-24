@@ -8,9 +8,8 @@ public class Cliente{
 	private int pontos;
 	private final int PERIODO =12;
 	private double totalValorGasto;
-	private IaceleradorPts acelerador;
+	private double multiplicador;
 
-	
 	public Cliente(String nome) {
 		
 		this.nome = nome;
@@ -21,7 +20,6 @@ public class Cliente{
 
 	//MÉTODOS
 	public void comprarBilhete(Bilhete bilhete){
-		
 		
 		this.compras.add(bilhete);
 		
@@ -41,13 +39,12 @@ public class Cliente{
 		
 		return this.pontos;
 	}
-	public void addAcelerador(IaceleradorPts acelerador){
 
+	public void addMultiplicador(double multi){
+		this.multiplicador = multi;
+		
 	}
 
-	public void desativarAcelerador(){
-
-	}
 	//GETTERS/SETTERS
 
 	public String getNome() {
@@ -80,14 +77,6 @@ public class Cliente{
 
 	public void setTotalValorGasto(double totalValorGasto) {
 		this.totalValorGasto = totalValorGasto;
-	}
-
-	public IaceleradorPts getAcelerador() {
-		return acelerador;
-	}
-
-	public void setAcelerador(IaceleradorPts acelerador) {
-		this.acelerador = acelerador;
 	}
 
 	public int getPERIODO() {
