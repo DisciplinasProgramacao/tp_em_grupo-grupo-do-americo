@@ -2,7 +2,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Bilhete {
+
+
+public abstract class Bilhete implements Comparable<Bilhete> {
 
 	protected String codBilhete;
 	protected double preco;
@@ -10,9 +12,10 @@ public abstract class Bilhete {
 	protected List<Voo> reservas = new ArrayList<>();
 	protected final double ACRESCIMO_VOO = 0.1;
 	protected final double ACRESCIMO_DIVERSOS_VOO = 0.5;
-
+	
 	public Bilhete(String codBilhete, LocalDate data, Voo voo) {
-		this.codBilhete = codBilhete;
+		this.codBilhete = codBilhete; 
+		
 		this.data = data;
 		this.reservas.add(voo);
 	}
@@ -22,6 +25,12 @@ public abstract class Bilhete {
 
 	public void adicionarVoo(Voo voo) {
 		this.reservas.add(voo);
+		
+	}
+	@Override
+	public int compareTo(Bilhete bilhete) {
+		
+		return this.data.compareTo(bilhete.data);
 	}
 
 	public void removerVoo(String codigo) {
@@ -40,5 +49,9 @@ public abstract class Bilhete {
 		}
 		return sb.toString();
 	}
-
+	
+	public LocalDate getDate() {
+		
+		return this.data;
+	}
 }
