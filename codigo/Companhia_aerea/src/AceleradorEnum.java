@@ -1,4 +1,5 @@
 public enum AceleradorEnum{
+    PADRAO("Padrao",1.00d),
     PRATA("Prata",1.25d),
     PRETO("Preto",1.50d);
 

@@ -27,11 +27,6 @@ public abstract class Bilhete implements Comparable<Bilhete> {
 		this.reservas.add(voo);
 		
 	}
-	@Override
-	public int compareTo(Bilhete bilhete) {
-		
-		return this.data.compareTo(bilhete.data);
-	}
 
 	public void removerVoo(String codigo) {
 		for (Voo voo : reservas) {
@@ -48,6 +43,12 @@ public abstract class Bilhete implements Comparable<Bilhete> {
 			sb.append("\n" + voo.toString());
 		}
 		return sb.toString();
+	}
+
+	@Override
+	public int compareTo(Bilhete bilhete) {
+		
+		return this.data.compareTo(bilhete.data);
 	}
 	
 	public LocalDate getDate() {

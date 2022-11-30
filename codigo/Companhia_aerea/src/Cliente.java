@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +12,7 @@ public class Cliente {
 	private int pontos;
 	private final int PERIODO = 12;
 	private double totalValorGasto;
-	private double multiplicador;
+	private AceleradorEnum multiplicador;
 	private final int REF_PONTOS = 10500;
 
 	public Cliente(String nome, String cpf) {
@@ -22,51 +22,46 @@ public class Cliente {
 		this.compras = new ArrayList<Bilhete>();
 		this.pontos = 0;
 		this.totalValorGasto = 0;
-		this.multiplicador = 1;
+		this.multiplicador = AceleradorEnum.PADRAO;
 	}
 
 	// MÉTODOS
 	public void comprarBilhete(Bilhete bilhete) {
-
 		this.compras.add(bilhete);
-
 	}
 
 	public void ordenarCompras() {
-
 		Collections.sort(this.compras);
 	}
 
 	public int verificadorPontos() {
-		int auxPontos = 0;
-
-		for (Bilhete bilhete : compras) {
-
-			long mes = bilhete.getDate().until(LocalDateTime.now(), ChronoUnit.MONTHS);
-			if (mes > this.PERIODO) {
-				auxPontos = bilhete.calcularPontos();
-
-			}
-		}
-
-		int qtdBilhetes = auxPontos / this.REF_PONTOS;
-
-		return qtdBilhetes;
+		return (int) this.pontos / this.REF_PONTOS;
 	}
 
 	public int calcularPontos() {
-
 		for (Bilhete bilhete : compras) {
-
-			this.pontos += bilhete.calcularPontos() * this.multiplicador;
+			long mes = bilhete.getDate().until(LocalDate.now(), ChronoUnit.MONTHS);
+			if (mes <= this.PERIODO) {
+				this.pontos += (int) bilhete.calcularPontos() * this.multiplicador.getMultiplicador();
+			}
 		}
 
 		return this.pontos;
 	}
 
-	public void addMultiplicador(double multi) {
-		this.setMultiplicador(multi);
+	public void addMultiplicador(AceleradorEnum multi) {
+		this.multiplicador = multi;
 
+	}
+
+	public String descricao() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Nome: " + this.nome + " CPF: " + this.cpf + " Pontos: " + this.pontos + " TotalValorGasto: "
+				+ this.totalValorGasto);
+		sb.append("\nBilhetes:");
+		this.compras.forEach(b-> sb.append(b.descricao()));
+
+		return sb.toString();
 	}
 
 	// GETTERS/SETTERS
@@ -75,49 +70,32 @@ public class Cliente {
 		return nome;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public List<Bilhete> getCompras() {
+		return compras;
 	}
 
 	public int getPontos() {
 		return pontos;
 	}
 
-	public void setPontos(int pontos) {
-		this.pontos = pontos;
-	}
-
 	public double getTotalValorGasto() {
 		return totalValorGasto;
-	}
-
-	public void setTotalValorGasto(double totalValorGasto) {
-		this.totalValorGasto = totalValorGasto;
 	}
 
 	public int getPERIODO() {
 		return PERIODO;
 	}
 
-	public String descricao() {
-		return "Cliente [nome=" + nome + ", compras=" + compras + ", pontos=" + pontos + ", totalValorGasto="
-				+ totalValorGasto + "]";
-	}
-
-	public double getMultiplicador() {
+	public AceleradorEnum getMultiplicador() {
 		return multiplicador;
-	}
-
-	public void setMultiplicador(double multiplicador) {
-		this.multiplicador = multiplicador;
 	}
 
 	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public int getREF_PONTOS() {
+		return REF_PONTOS;
 	}
 
 }
