@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class App {
@@ -195,14 +194,19 @@ public class App {
                     System.out.println("Bilhetes dos últimos 12 meses:");
                     List<Bilhete> auxBilhetes = clienteAtual.getCompras().stream()
                             .filter(b -> b.getDate().until(LocalDate.now(), ChronoUnit.MONTHS) <= 12).toList();
-                    auxBilhetes.forEach(b -> System.out.println(b.descricao()));
-                    if (clienteAtual.verificadorPontos() >= 1) {
-                        System.out
-                                .println("Cliente tem direto a " + clienteAtual.verificadorPontos()
-                                        + " bilhetes Promocional");
-                        System.out.println("Digite qualquer coisa para continuar...");
-                        teclado.next();
-                    }
+                            if (auxBilhetes.isEmpty()) {
+                                System.out.println("Cliente não possui bilhetes nos últimos 12 meses.");
+                            } else {
+                                auxBilhetes.forEach(b -> System.out.println(b.descricao()));
+                                if (clienteAtual.verificadorPontos() >= 1) {
+                                    System.out
+                                            .println("Cliente tem direto a " + clienteAtual.verificadorPontos()
+                                                    + " bilhetes Promocional");
+                                }
+                            }
+                            System.out.println("Digite qualquer coisa para continuar...");
+                            teclado.next();
+                    
                     break;
                 case 4:
                     System.out.println("      AeroLine      ");
@@ -311,7 +315,7 @@ public class App {
                     clienteAtual = Criarcliente();
                     System.out.println("      AeroLine      ");
                     System.out.println("====================");
-                    System.out.println(clienteAtual.descricao());
+                    System.out.println("Cliente criado...");
                     clientes.put(clienteAtual.getCpf(), clienteAtual);
                     System.out.println("Digite qualquer coisa para continuar...");
                     teclado.next();

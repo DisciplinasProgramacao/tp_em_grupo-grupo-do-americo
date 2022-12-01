@@ -1,7 +1,17 @@
-Usar LocalDateTime.
+Correções:
 
-adicionar um método adicionar voo na classe Bilhete.
+validação do ano
+logica de ganho de bilhete fidelidade (corrigir os texto no sysout)
+colocar clietens.put menu bilhete
 
-criar atributo com qnt de voos na classe Bilhete.
 
-*mudar tipo do método calcularPontos para int.
+corrigir calcular pontos da classe cliente.
+
+
+gerador automatico de codigo do bilhete
+
+
+opção remover cliente
+
+
+debug relatorio cliente com mais pontos 
