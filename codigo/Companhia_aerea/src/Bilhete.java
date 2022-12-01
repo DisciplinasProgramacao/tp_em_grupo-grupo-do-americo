@@ -55,4 +55,10 @@ public abstract class Bilhete implements Comparable<Bilhete> {
 		
 		return this.data;
 	}
+
+	public List<Voo> getReservas() {
+		return reservas;
+	}
+
+	
 }

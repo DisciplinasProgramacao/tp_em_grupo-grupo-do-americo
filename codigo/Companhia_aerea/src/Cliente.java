@@ -28,6 +28,8 @@ public class Cliente {
 	// MÉTODOS
 	public void comprarBilhete(Bilhete bilhete) {
 		this.compras.add(bilhete);
+		totalValorGasto += bilhete.calcularPreco();
+		calcularPontos();
 	}
 
 	public void ordenarCompras() {
@@ -57,9 +59,9 @@ public class Cliente {
 	public String descricao() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Nome: " + this.nome + " CPF: " + this.cpf + " Pontos: " + this.pontos + " TotalValorGasto: "
-				+ this.totalValorGasto);
-		sb.append("\nBilhetes:");
-		this.compras.forEach(b-> sb.append(b.descricao()));
+				+ this.totalValorGasto + " Acelerador: " + this.multiplicador.getDescricao());
+		sb.append("\nBilhetes: \n");
+		this.compras.forEach(b-> sb.append("\n" + b.descricao()));
 
 		return sb.toString();
 	}
