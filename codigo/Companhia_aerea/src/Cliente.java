@@ -16,30 +16,47 @@ public class Cliente {
 	private final int REF_PONTOS = 10500;
 
 	public Cliente(String nome, String cpf) {
-
 		this.nome = nome;
 		this.cpf = cpf;
 		this.compras = new ArrayList<Bilhete>();
 		this.pontos = 0;
 		this.totalValorGasto = 0;
 		this.multiplicador = AceleradorEnum.PADRAO;
+
 	}
 
 	// MÉTODOS
+
+	/**
+	 * Metodo para guardar bilhete na lista de compra.
+	 * recebe como parametro um bilhete.
+	 * @param bilhete
+	 */
 	public void comprarBilhete(Bilhete bilhete) {
 		this.compras.add(bilhete);
 		totalValorGasto += bilhete.calcularPreco();
 		calcularPontos();
 	}
 
+	/**
+	 * Metodo para ordenar as compras em ordem cronologica.
+	 */
 	public void ordenarCompras() {
 		Collections.sort(this.compras);
 	}
 
+	/**
+	 * metodo para verificar pontos do cliente.
+	 * @return os pontos do cliente.
+	 */
 	public int verificadorPontos() {
 		return (int) this.pontos / this.REF_PONTOS;
 	}
 
+	/**
+	 * Metodo para calcular os pontos do cliente.
+	 * @return os pontos calculados do cliente.
+	 */
 	public int calcularPontos() {
 		for (Bilhete bilhete : compras) {
 			long mes = bilhete.getDate().until(LocalDate.now(), ChronoUnit.MONTHS);
@@ -51,11 +68,20 @@ public class Cliente {
 		return this.pontos;
 	}
 
+	/**
+	 * Metodo utilizado para adicionar um  multiplicador de pontos para o cliente.
+	 * Parametro multi que é o multiplicador de pontos.
+	 * @param multi
+	 */
 	public void addMultiplicador(AceleradorEnum multi) {
 		this.multiplicador = multi;
 
 	}
 
+	/**
+	 * Metodo para saber informações do cliente.
+	 * @return as informações do cliente.
+	 */
 	public String descricao() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Nome: " + this.nome + " CPF: " + this.cpf + " Pontos: " + this.pontos + " TotalValorGasto: "

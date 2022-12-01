@@ -9,9 +9,13 @@ public class Trecho {
 		this.origem = origem;
 		this.destino = destino;
 	}
+
+
 	public String toString() {
 		return this.codigo +" ("+this.origem+"/"+this.destino +")";
 	}
+
+
 	public String getCodigo() {
 		return codigo;
 	}
