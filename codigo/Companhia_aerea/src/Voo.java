@@ -13,6 +13,10 @@ public class Voo {
 		this.valorBase = valorBase;
 	}
 
+	/**
+	 * Valor base do voo.
+	 * @return o valor base do voo.
+	 */
 	public double valorBase() {
 		return this.valorBase;
 	}
