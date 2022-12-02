@@ -25,11 +25,8 @@ public class App {
     }
 
     public static String codBilhete() {
-        System.out.println("      AeroLine      ");
-        System.out.println("====================");
-        System.out.println("Digite Código do bilhete:");
 
-        return teclado.next();
+        return "AERO-" + (clientes.values().stream().mapToInt(c -> c.getCompras().size()).sum() + 1);
     }
 
     public static LocalDate data() {
@@ -38,6 +35,9 @@ public class App {
         System.out.println("Insira a Data:");
         System.out.println("Digite Ano:");
         int ano = teclado.nextInt();
+        if (ano < 1904 || ano > 2100) {
+            throw new DateTimeException(null);
+        }
         System.out.println("Digite Mês:");
         int mes = teclado.nextInt();
         System.out.println("Digite Dia:");
@@ -60,7 +60,7 @@ public class App {
         System.out.println("====================");
         System.out.println("Definições do Voo:");
         Trecho trecho = trechoBilhete();
-        LocalDate data = LocalDate.now();
+        LocalDate data = data();
         System.out.println("Digite o valor base:");
         double valor = teclado.nextDouble();
 
@@ -71,14 +71,13 @@ public class App {
      * Menu para realizar compras de um bilhete para cliente.
      */
     public static void menuCompra() {
-        int opcao;
+        String opcao;
         do {
-            // TODO Verificar se vai usar esta logica para bilhete promocional.
             if (clienteAtual.verificadorPontos() >= 1) {
                 System.out.println("      AeroLine      ");
                 System.out.println("====================");
                 System.out
-                        .println("Cliente tem direto a " + clienteAtual.verificadorPontos() + " bilhetes Promocional");
+                        .println("Cliente tem direto a " + clienteAtual.verificadorPontos() + " Bilhetes Fidelidade");
             }
             System.out.println("      AeroLine      ");
             System.out.println("====================");
@@ -87,12 +86,12 @@ public class App {
             System.out.println("2 - Bilhete Fidelidade");
             System.out.println("3 - Bilhete Promocional");
             System.out.println("0 - Sair");
-            opcao = teclado.nextInt();
+            opcao = teclado.next();
 
             try {
                 switch (opcao) {
-                    case 1:
-                        bilhete = new BilheteComum(codBilhete(), data(), vooBilhete());
+                    case "1":
+                        bilhete = new BilheteComum(codBilhete(), LocalDate.now(), vooBilhete());
                         System.out.println("      AeroLine      ");
                         System.out.println("====================");
                         System.out.println(bilhete.descricao());
@@ -100,8 +99,22 @@ public class App {
                         System.out.println("Digite qualquer coisa para continuar...");
                         teclado.next();
                         break;
-                    case 2:
-                        bilhete = new BilheteFidelidade(codBilhete(), data(), vooBilhete());
+                    case "2":
+                        if (clienteAtual.verificadorPontos() > 0) {
+                            bilhete = new BilheteFidelidade(codBilhete(), LocalDate.now(), vooBilhete());
+                            System.out.println("      AeroLine      ");
+                            System.out.println("====================");
+                            System.out.println(bilhete.descricao());
+                            clienteAtual.comprarBilhete(bilhete);
+                        } else {
+                            System.out.println("Cliente não tem direito a bilhete Fidelidade.");
+                        }
+
+                        System.out.println("Digite qualquer coisa para continuar...");
+                        teclado.next();
+                        break;
+                    case "3":
+                        bilhete = new BilhetePromocional(codBilhete(), LocalDate.now(), vooBilhete());
                         System.out.println("      AeroLine      ");
                         System.out.println("====================");
                         System.out.println(bilhete.descricao());
@@ -109,16 +122,7 @@ public class App {
                         System.out.println("Digite qualquer coisa para continuar...");
                         teclado.next();
                         break;
-                    case 3:
-                        bilhete = new BilhetePromocional(codBilhete(), data(), vooBilhete());
-                        System.out.println("      AeroLine      ");
-                        System.out.println("====================");
-                        System.out.println(bilhete.descricao());
-                        clienteAtual.comprarBilhete(bilhete);
-                        System.out.println("Digite qualquer coisa para continuar...");
-                        teclado.next();
-                        break;
-                    case 0:
+                    case "0":
                         System.out.println("Saindo...");
                         break;
                     default:
@@ -130,14 +134,14 @@ public class App {
                 System.out.println("====================");
                 System.out.println("Data com valor Invalido");
                 System.out.println("Tente novamente...");
-            } catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 System.out.println("      AeroLine      ");
                 System.out.println("====================");
                 System.out.println("Valor base do voo Invalido");
                 System.out.println("Tente novamente...");
             }
 
-        } while (opcao != 0);
+        } while (!opcao.contains("0"));
     }
 
     public static Cliente Criarcliente() {
@@ -151,7 +155,7 @@ public class App {
     }
 
     public static void menuCliente() {
-        int opcao;
+        String opcao;
         do {
             System.out.println("      AeroLine      ");
             System.out.println("====================");
@@ -161,16 +165,15 @@ public class App {
             System.out.println("3 - Bilhetes dos últimos 12 meses");
             System.out.println("4 - Relatório do Cliente");
             System.out.println("0 - Sair");
-            opcao = teclado.nextInt();
+            opcao = teclado.next();
             switch (opcao) {
-                case 1:
+                case "1":
                     menuCompra();
                     clientes.put(clienteAtual.getCpf(), clienteAtual);
                     break;
-                case 2:
+                case "2":
                     System.out.println("      AeroLine      ");
                     System.out.println("====================");
-                    // TODO Verificar aleterações do Enum na classe Cliente.
                     System.out.println("Multiplicado atual : " + clienteAtual.getMultiplicador().getDescricao());
                     System.out.println("Escolha um novo plano:");
                     System.out.println("1 - Prata");
@@ -188,27 +191,27 @@ public class App {
                         System.out.println("Saindo...");
                     }
                     break;
-                case 3:
+                case "3":
                     System.out.println("      AeroLine      ");
                     System.out.println("====================");
                     System.out.println("Bilhetes dos últimos 12 meses:");
                     List<Bilhete> auxBilhetes = clienteAtual.getCompras().stream()
                             .filter(b -> b.getDate().until(LocalDate.now(), ChronoUnit.MONTHS) <= 12).toList();
-                            if (auxBilhetes.isEmpty()) {
-                                System.out.println("Cliente não possui bilhetes nos últimos 12 meses.");
-                            } else {
-                                auxBilhetes.forEach(b -> System.out.println(b.descricao()));
-                                if (clienteAtual.verificadorPontos() >= 1) {
-                                    System.out
-                                            .println("Cliente tem direto a " + clienteAtual.verificadorPontos()
-                                                    + " bilhetes Promocional");
-                                }
-                            }
-                            System.out.println("Digite qualquer coisa para continuar...");
-                            teclado.next();
-                    
+                    if (auxBilhetes.isEmpty()) {
+                        System.out.println("Cliente não possui bilhetes nos últimos 12 meses.");
+                    } else {
+                        auxBilhetes.forEach(b -> System.out.println(b.descricao()));
+                        if (clienteAtual.verificadorPontos() >= 1) {
+                            System.out
+                                    .println("Cliente tem direto a " + clienteAtual.verificadorPontos()
+                                            + " bilhetes Fidelidade");
+                        }
+                    }
+                    System.out.println("Digite qualquer coisa para continuar...");
+                    teclado.next();
+
                     break;
-                case 4:
+                case "4":
                     System.out.println("      AeroLine      ");
                     System.out.println("====================");
                     System.out.println("Relatório:");
@@ -216,7 +219,7 @@ public class App {
                     System.out.println("Digite qualquer coisa para continuar...");
                     teclado.next();
                     break;
-                case 0:
+                case "0":
                     clientes.put(clienteAtual.getCpf(), clienteAtual);
                     System.out.println("Saindo...");
                     break;
@@ -224,11 +227,11 @@ public class App {
                     System.out.println("Valor Inválido");
                     break;
             }
-        } while (opcao != 0);
+        } while (!opcao.contains("0"));
     }
 
     public static void menuRelatorio() {
-        int opcao;
+        String opcao;
         List<Voo> voos;
 
         do {
@@ -239,22 +242,24 @@ public class App {
             System.out.println("2 - Voos por cidade a partir de um data, com mais de 100 reservas");
             System.out.println("3 - Valor total arrecadado com bilhetes");
             System.out.println("0 - Sair");
-            opcao = teclado.nextInt();
+            opcao = teclado.next();
             switch (opcao) {
-                case 1:
+                case "1":
                     System.out.println("      AeroLine      ");
                     System.out.println("====================");
-
-                    Optional<Cliente> maiorCliente = clientes.values().stream()
+                    // Filtra pegando todos clientes com pontuação > 0 , e pega máximo comparando
+                    // por pontos.
+                    // Classe cliente ja valida os pontos valido até 12 meses
+                    Optional<Cliente> maiorCliente = clientes.values().stream().filter(c -> c.calcularPontos() > 0)
                             .max((o1, o2) -> o1.calcularPontos() > o2.calcularPontos() ? 1
                                     : o1.calcularPontos() < o2.calcularPontos() ? -1 : 0);
                     System.out.println(maiorCliente.isPresent() ? maiorCliente.get().descricao()
-                            : "Não temos cliente com pontuação maxima");
+                            : "Não temos cliente com mais pontos acumulados nos últimos 12 meses");
 
                     System.out.println("Digite qualquer coisa para continuar...");
                     teclado.next();
                     break;
-                case 2:
+                case "2":
                     System.out.println("      AeroLine      ");
                     System.out.println("====================");
                     System.out.println("Digite a cidade:");
@@ -281,7 +286,7 @@ public class App {
                     System.out.println("Digite qualquer coisa para continuar...");
                     teclado.next();
                     break;
-                case 3:
+                case "3":
                     System.out.println("      AeroLine      ");
                     System.out.println("====================");
                     double totalArrecadado = clientes.values().stream().mapToDouble(c -> c.getTotalValorGasto()).sum();
@@ -289,38 +294,43 @@ public class App {
                     System.out.println("Digite qualquer coisa para continuar...");
                     teclado.next();
                     break;
-                case 0:
+                case "0":
                     System.out.println("Saindo...");
                     break;
                 default:
                     System.out.println("Valor Inválido");
                     break;
             }
-        } while (opcao != 0);
+        } while (!opcao.contains("0"));
     }
 
     public static void main(String[] args) {
-        int opcao;
+        String opcao;
         do {
             System.out.println("      AeroLine      ");
             System.out.println("====================");
             System.out.println("Escolha o opção:");
             System.out.println("1 - Criar novo Cliente");
             System.out.println("2 - Selecionar Cliente");
-            System.out.println("3 - Relatórios Geral");
+            System.out.println("3 - Remover Cliente");
+            System.out.println("4 - Relatórios Geral");
             System.out.println("0 - Sair");
-            opcao = teclado.nextInt();
+            opcao = teclado.next();
             switch (opcao) {
-                case 1:
+                case "1":
                     clienteAtual = Criarcliente();
                     System.out.println("      AeroLine      ");
                     System.out.println("====================");
-                    System.out.println("Cliente criado...");
-                    clientes.put(clienteAtual.getCpf(), clienteAtual);
+                    if (clientes.containsKey(clienteAtual.getCpf())) {
+                        System.out.println("Este CPF já existe ,Cliente não foi criado...");
+                    } else {
+                        System.out.println("Cliente criado...");
+                        clientes.put(clienteAtual.getCpf(), clienteAtual);
+                    }
                     System.out.println("Digite qualquer coisa para continuar...");
                     teclado.next();
                     break;
-                case 2:
+                case "2":
                     System.out.println("      AeroLine      ");
                     System.out.println("====================");
                     System.out.println("Digite o CPF do cliente:");
@@ -334,21 +344,31 @@ public class App {
                         teclado.next();
                     }
                     break;
-                case 3:
-                    menuRelatorio();
-                    // TODO Implementar relatórios gerais.
-                    // Quais são os voos para uma cidade, em uma data, com mais de 100 reservas?
-                    // Qual o total valor arrecadado com bilhetes em todo o período de funcionamento
-                    // da empresa, podendo ainda filtrar o valor por um mês escolhido?
+                case "3":
+                    System.out.println("      AeroLine      ");
+                    System.out.println("====================");
+                    System.out.println("Digite o CPF do cliente que deseja remover:");
+                    String cpfRemove = teclado.next();
+                    if (clientes.containsKey(cpfRemove)) {
+                        clientes.remove(cpfRemove);
+                        System.out.println("Cliente foi removido...");
+                    } else {
+                        System.out.println("O cliente não foi encontrado...");
+                    }
+                    System.out.println("Digite qualquer coisa para continuar...");
+                    teclado.next();
                     break;
-                case 0:
+                case "4":
+                    menuRelatorio();
+                    break;
+                case "0":
                     System.out.println("Saindo...");
                     break;
                 default:
                     System.out.println("Valor Inválido");
                     break;
             }
-        } while (opcao != 0);
+        } while (!opcao.contains("0"));
 
     }
 }

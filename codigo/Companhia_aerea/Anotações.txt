@@ -1,17 +1,19 @@
-Correções:
+validação do ano x
 
-validação do ano
-logica de ganho de bilhete fidelidade (corrigir os texto no sysout)
-colocar clietens.put menu bilhete
+logica de ganho de bilhete fidelidade (corrigir os texto no sysout) x 
 
+validação novo cliente x
 
-corrigir calcular pontos da classe cliente.
-
-
-gerador automatico de codigo do bilhete
+corrigir calcular pontos da classe cliente. x
 
 
-opção remover cliente
+gerador automático de código do bilhete x
 
 
-debug relatorio cliente com mais pontos 
+opção remover cliente x
+
+
+debug relatório cliente com mais pontos x
+
+
+Implementar no Protótipo Bilhete ter vários voos

@@ -36,6 +36,7 @@ public class Cliente {
 		this.compras.add(bilhete);
 		totalValorGasto += bilhete.calcularPreco();
 		calcularPontos();
+		ordenarCompras();
 	}
 
 	/**
@@ -58,13 +59,16 @@ public class Cliente {
 	 * @return os pontos calculados do cliente.
 	 */
 	public int calcularPontos() {
+		int pts = 0;
 		for (Bilhete bilhete : compras) {
 			long mes = bilhete.getDate().until(LocalDate.now(), ChronoUnit.MONTHS);
 			if (mes <= this.PERIODO) {
-				this.pontos += (int) bilhete.calcularPontos() * this.multiplicador.getMultiplicador();
+				pts += (int) bilhete.calcularPontos() * this.multiplicador.getMultiplicador();
+			}if (bilhete.calcularPontos() == 0) {
+				pts -= this.REF_PONTOS;
 			}
 		}
-
+		this.pontos = pts;				
 		return this.pontos;
 	}
 

@@ -22,7 +22,7 @@ public class Voo {
 	}
 
 	public String toString() {
-		return this.trecho.toString() + " - " + this.data;
+		return this.trecho.toString() + " - " + this.data +  " Valor Base: " + this.valorBase();
 	}
 	public Trecho getTrecho() {
 		return trecho;
