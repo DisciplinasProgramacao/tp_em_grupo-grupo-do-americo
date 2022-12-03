@@ -42,7 +42,7 @@ public class BilheteComum extends Bilhete {
 	
 	@Override
 	public String descricao() {
-		return super.descricao() + "\nPontos Obtidos: " + this.pontos;
+		return super.descricao() + "\nPontos Obtidos: " + this.pontos + " Tipo: Comum";
 	}
 
 }

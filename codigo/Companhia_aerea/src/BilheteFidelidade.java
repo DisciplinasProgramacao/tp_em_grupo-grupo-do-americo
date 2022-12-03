@@ -13,7 +13,7 @@ public class BilheteFidelidade extends Bilhete {
 	}
 	@Override
 	public String descricao() {
-		return super.descricao();
+		return super.descricao() + " Tipo: Fidelidade";
 	}
 
 	@Override

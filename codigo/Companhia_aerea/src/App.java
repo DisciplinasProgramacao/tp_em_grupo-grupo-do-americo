@@ -35,9 +35,7 @@ public class App {
         System.out.println("Insira a Data:");
         System.out.println("Digite Ano:");
         int ano = teclado.nextInt();
-        if (ano < 1904 || ano > 2100) {
-            throw new DateTimeException(null);
-        }
+        if (ano < 1904 || ano > 2100) throw new DateTimeException(null);
         System.out.println("Digite Mês:");
         int mes = teclado.nextInt();
         System.out.println("Digite Dia:");
@@ -67,6 +65,40 @@ public class App {
         return new Voo(trecho, data, valor);
     }
 
+    public static void menuVoo() {
+        String opcao;
+        do {
+            System.out.println("      AeroLine      ");
+            System.out.println("====================");
+            System.out.println("1 - Adicionar mais Voo");
+            System.out.println("2 - Remover Voo");
+            System.out.println("0 - Continuar");
+            opcao = teclado.next();
+            switch (opcao) {
+                case "1":
+                    bilhete.adicionarVoo(vooBilhete());
+                    break;
+                case "2":
+                    if (bilhete.getReservas().size() <= 1) {
+                        System.out.println("Não é possível deixar bilhete sem Voo.");
+                    } else {
+                        System.out.println("      AeroLine      ");
+                        System.out.println("====================");
+                        System.out.println("Digite o código do Voo para remover:");
+                        System.out.println(bilhete.removerVoo(teclado.next()) ? "Removido" : "Não Encontrado");
+                    }
+                    break;
+                case "0":
+                    System.out.println("Salvando...");
+                    break;
+                default:
+                    System.out.println("Valor Inválido");
+                    break;
+            }
+        } while (!opcao.contains("0"));
+
+    }
+
     /**
      * Menu para realizar compras de um bilhete para cliente.
      */
@@ -92,6 +124,7 @@ public class App {
                 switch (opcao) {
                     case "1":
                         bilhete = new BilheteComum(codBilhete(), LocalDate.now(), vooBilhete());
+                        menuVoo();
                         System.out.println("      AeroLine      ");
                         System.out.println("====================");
                         System.out.println(bilhete.descricao());
@@ -102,6 +135,7 @@ public class App {
                     case "2":
                         if (clienteAtual.verificadorPontos() > 0) {
                             bilhete = new BilheteFidelidade(codBilhete(), LocalDate.now(), vooBilhete());
+                            menuVoo();
                             System.out.println("      AeroLine      ");
                             System.out.println("====================");
                             System.out.println(bilhete.descricao());
@@ -115,6 +149,7 @@ public class App {
                         break;
                     case "3":
                         bilhete = new BilhetePromocional(codBilhete(), LocalDate.now(), vooBilhete());
+                        menuVoo();
                         System.out.println("      AeroLine      ");
                         System.out.println("====================");
                         System.out.println(bilhete.descricao());
@@ -180,15 +215,15 @@ public class App {
                     System.out.println("2 - Preto");
                     System.out.println("3 - Padrão");
                     System.out.println("0 - Sair");
-                    int plano = teclado.nextInt();
-                    if (plano == 1) {
+                    String plano = teclado.next();
+                    if (plano.contains("1")) {
                         clienteAtual.addMultiplicador(AceleradorEnum.PRATA);
-                    } else if (plano == 2) {
+                    } else if (plano.contains("2")) {
                         clienteAtual.addMultiplicador(AceleradorEnum.PRETO);
-                    } else if (plano == 3) {
+                    } else if (plano.contains("3")) {
                         clienteAtual.addMultiplicador(AceleradorEnum.PADRAO);
                     } else {
-                        System.out.println("Saindo...");
+                        System.out.println("Valor Invalido...");
                     }
                     break;
                 case "3":
@@ -280,7 +315,7 @@ public class App {
                     if (voos.size() > 100) {
                         voos.stream().forEach(v -> System.out.println(v.toString()));
                     } else {
-                        System.out.println("Não existe voos com estes criterios");
+                        System.out.println("Não existe voos com estes critérios");
                     }
 
                     System.out.println("Digite qualquer coisa para continuar...");
@@ -362,6 +397,7 @@ public class App {
                     menuRelatorio();
                     break;
                 case "0":
+                    teclado.close();
                     System.out.println("Saindo...");
                     break;
                 default:

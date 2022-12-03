@@ -38,6 +38,7 @@ public abstract class Bilhete implements Comparable<Bilhete> {
 	 */
 	public void adicionarVoo(Voo voo) {
 		this.reservas.add(voo);
+		calcularPontos();
 		
 	}
 
@@ -46,11 +47,17 @@ public abstract class Bilhete implements Comparable<Bilhete> {
 	 * parametro codigo usado para remover voo especifico.
 	 * @param codigo 
 	 */
-	public void removerVoo(String codigo) {
+	public boolean removerVoo(String codigo) {
+		boolean removido = false;
 		for (Voo voo : reservas) {
-			if (codigo.equals(voo.getTrecho().getCodigo()))
+			if (codigo.equals(voo.getTrecho().getCodigo())){
 				reservas.remove(voo);
+				calcularPontos();
+				removido = true;
+			}
+				
 		}
+		return removido;
 	}
 
 	/**
