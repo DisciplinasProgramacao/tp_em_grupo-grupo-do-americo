@@ -50,7 +50,7 @@ public class Cliente implements Serializable{
 
 	/**
 	 * metodo para verificar pontos do cliente.
-	 * @return os pontos do cliente.
+	 * @return Quantidade de bilhetes que o cliente tem direito.
 	 */
 	public int verificadorPontos() {
 		return (int) this.pontos / this.REF_PONTOS;

@@ -21,7 +21,9 @@ public class App {
     static Bilhete bilhete;
     static Cliente clienteAtual;
     static Map<String, Cliente> clientes = new HashMap<>();
-
+    /**
+     * Método para ler os dados do cliente do arquivo.
+     */
     public static void lerArquivo() {
         Map<String, Cliente> auxClientes = new HashMap<>();
         ObjectInputStream leitorObj;
@@ -44,7 +46,9 @@ public class App {
         }
 
     }
-
+    /**
+     * Método para salvar os dados do cliente no arquivo.
+     */
     public static void gravarArquivo() {
         ObjectOutputStream gravadorObj;
         try {
@@ -62,12 +66,16 @@ public class App {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Gerador de códigos dos bilhetes de acordo com quantidade de bilhetes ja criadas
+     */
     public static String codBilhete() {
 
         return "AERO-" + (clientes.values().stream().mapToInt(c -> c.getCompras().size()).sum() + 1);
     }
-
+    /**
+     * Método para criar um data.
+     */
     public static LocalDate data() {
         System.out.println("      AeroLine      ");
         System.out.println("====================");
@@ -82,7 +90,9 @@ public class App {
         int dia = Integer.parseInt(teclado.nextLine());
         return LocalDate.of(ano, mes, dia);
     }
-
+    /**
+     * Método para criar um Trecho.
+     */
     public static Trecho trechoBilhete() {
         System.out.println("Digite o Código do Trecho:");
         String cod = teclado.nextLine();
@@ -92,7 +102,9 @@ public class App {
         String destino = teclado.nextLine();
         return new Trecho(cod, origem, destino);
     }
-
+    /**
+     * Método para criar um Voo.
+     */
     public static Voo vooBilhete() {
         System.out.println("      AeroLine      ");
         System.out.println("====================");
@@ -104,7 +116,9 @@ public class App {
 
         return new Voo(trecho, data, valor);
     }
-
+    /**
+     * Menu de Voo para ajustes de Voo do bilhete.
+     */
     public static void menuVoo() {
         String opcao;
         do {
@@ -223,7 +237,9 @@ public class App {
 
         } while (!opcao.contains("0"));
     }
-
+    /**
+     * Método para criar um Cliente.
+     */
     public static Cliente Criarcliente() {
         System.out.println("      AeroLine      ");
         System.out.println("====================");
@@ -233,7 +249,9 @@ public class App {
         String cpf = teclado.nextLine();
         return new Cliente(nome, cpf);
     }
-
+    /**
+     * Menu do Cliente para realizar suas operações.
+     */
     public static void menuCliente() {
         String opcao;
         do {
@@ -309,7 +327,9 @@ public class App {
             }
         } while (!opcao.contains("0"));
     }
-
+    /**
+     * Menu de Relatórios Gerais do sistema.
+     */
     public static void menuRelatorio() {
         String opcao;
         List<Voo> voos;
@@ -390,7 +410,9 @@ public class App {
             }
         } while (!opcao.contains("0"));
     }
-
+    /**
+     * Menu Principal.
+     */
     public static void main(String[] args) {
         String opcao;
         lerArquivo();
