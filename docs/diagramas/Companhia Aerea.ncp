@@ -33,7 +33,7 @@
         <Name>Bilhete</Name>
         <Access>Public</Access>
         <Location left="272" top="334" />
-        <Size width="292" height="264" />
+        <Size width="292" height="281" />
         <Collapsed>False</Collapsed>
         <Member type="Field">protected String codBilhete</Member>
         <Member type="Field">protected double preco</Member>
@@ -41,121 +41,98 @@
         <Member type="Field">protected List&lt;Voo&gt; reservas</Member>
         <Member type="Field">protected final double ACRESCIMO_VOO = 0.1</Member>
         <Member type="Field">protected final double ACRESCIMO_DIVERSOS_VOO = 0.5</Member>
-        <Member type="Method">protected abstract double calcularPreco()</Member>
+        <Member type="Method">public abstract double calcularPreco()</Member>
+        <Member type="Method">public abstract int calcularPontos()</Member>
         <Member type="Method">public void adicionarVoo(Voo voo)</Member>
-        <Member type="Method">public void removerVoo(String codigo)</Member>
+        <Member type="Method">public boolean removerVoo(String codigo)</Member>
         <Member type="Method">public String descricao()</Member>
+        <Member type="Method">public int compareTo(Bilhete bilhete)</Member>
         <Modifier>Abstract</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>BilheteComun</Name>
         <Access>Public</Access>
-        <Location left="99" top="683" />
+        <Location left="91" top="709" />
         <Size width="190" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private int pontos</Member>
         <Member type="Field">private final int REF_VALOR = 500</Member>
-        <Member type="Method">protected double calcularPreco()</Member>
-        <Member type="Method">public double calcularPontos()</Member>
+        <Member type="Method">public double calcularPreco()</Member>
+        <Member type="Method">public int calcularPontos()</Member>
         <Member type="Method">public String descricao()</Member>
         <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Interface">
-        <Name>Ifidelidade</Name>
-        <Access>Public</Access>
-        <Location left="230" top="980" />
-        <Size width="162" height="111" />
-        <Collapsed>False</Collapsed>
-        <Member type="Method">double calcularPontos()</Member>
       </Entity>
       <Entity type="Class">
         <Name>BilhetePromocional</Name>
         <Access>Public</Access>
-        <Location left="336" top="683" />
+        <Location left="336" top="709" />
         <Size width="250" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private int pontos</Member>
         <Member type="Field">private final int REF_VALOR = 500</Member>
         <Member type="Field">private final double DESCONTO_VALOR_TOTAL = 0.6</Member>
         <Member type="Field">private final double DESCONTO_PONTOS = 0.5</Member>
-        <Member type="Method">protected double calcularPreco()</Member>
-        <Member type="Method">public double calcularPontos()</Member>
+        <Member type="Method">public double calcularPreco()</Member>
+        <Member type="Method">public int calcularPontos()</Member>
         <Member type="Method">public String descricao()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>BilheteFidelidade</Name>
         <Access>Public</Access>
-        <Location left="632" top="683" />
+        <Location left="630" top="709" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Method">protected double calcularPreco()</Member>
+        <Member type="Method">public double calcularPreco()</Member>
+        <Member type="Method">public int calcularPontos()</Member>
         <Member type="Method">public String descricao()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Cliente</Name>
         <Access>Public</Access>
-        <Location left="658" top="348" />
-        <Size width="219" height="281" />
+        <Location left="658" top="334" />
+        <Size width="219" height="315" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private String nome</Member>
+        <Member type="Field">private String cpf</Member>
         <Member type="Field">private List&lt;Bilhete&gt; compras</Member>
         <Member type="Field">private int pontos</Member>
         <Member type="Field">private final int PERIODO = 12</Member>
         <Member type="Field">private double totalValorGasto</Member>
-        <Member type="Field">private IaceleradorPts acelerador</Member>
+        <Member type="Field">private AceleradorEnum multiplicador</Member>
+        <Member type="Field">private final int REF_PONTOS = 10500</Member>
         <Member type="Method">public void comprarBilhete(Bilhete bilhete)</Member>
         <Member type="Method">public void ordenarCompras()</Member>
         <Member type="Method">public int verificadorPontos()</Member>
         <Member type="Method">public int calcularPontos()</Member>
-        <Member type="Method">public void addAcelerador(IaceleradorPts acelerador)</Member>
-        <Member type="Method">public void desativarAcelerador()</Member>
+        <Member type="Method">public void addMultiplicador(IaceleradorPts acelerador)</Member>
+        <Member type="Method">public String descricao()</Member>
         <Modifier>None</Modifier>
       </Entity>
-      <Entity type="Interface">
-        <Name>IaceleradorPts</Name>
+      <Entity type="Enum">
+        <Name>AceleradorEnum</Name>
         <Access>Public</Access>
-        <Location left="976" top="348" />
+        <Location left="682" top="63" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Method">void custoMensal()</Member>
-        <Member type="Method">void trocar()</Member>
-        <Member type="Method">void desativar()</Member>
-      </Entity>
-      <Entity type="Class">
-        <Name>Prata</Name>
-        <Access>Public</Access>
-        <Location left="843" top="45" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Field">private final double MULT = 1.25</Member>
-        <Member type="Method">public void custoMensal()</Member>
-        <Member type="Method">public void trocar()</Member>
-        <Member type="Method">public void desativar()</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>Preto</Name>
-        <Access>Public</Access>
-        <Location left="1097" top="45" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Field">private final double MULT = 1.50</Member>
-        <Member type="Method">public void custoMensal()</Member>
-        <Member type="Method">public void trocar()</Member>
-        <Member type="Method">public void desativar()</Member>
-        <Modifier>None</Modifier>
+        <Value>PADRAO</Value>
+        <Value>PRATA</Value>
+        <Value>PRETO</Value>
       </Entity>
     </Entities>
     <Relationships>
       <Relationship type="Association" first="2" second="1">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Bidirectional</Direction>
         <AssociationType>Composition</AssociationType>
       </Relationship>
       <Relationship type="Association" first="1" second="0">
+        <Label>
+        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Bidirectional</Direction>
@@ -165,69 +142,33 @@
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
-      <Relationship type="Dependency" first="4" second="3">
-        <Label>
-        </Label>
-        <StartOrientation>Horizontal</StartOrientation>
+      <Relationship type="Generalization" first="4" second="2">
+        <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>418</X>
+          <Y>681</Y>
+        </BendPoint>
         <BendPoint relativeToStartShape="False">
-          <X>199</X>
-          <Y>925</Y>
+          <X>418</X>
+          <Y>642</Y>
         </BendPoint>
       </Relationship>
       <Relationship type="Generalization" first="5" second="2">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
-        <BendPoint relativeToStartShape="True">
-          <X>418</X>
-          <Y>655</Y>
-        </BendPoint>
-        <BendPoint relativeToStartShape="False">
-          <X>418</X>
-          <Y>625</Y>
-        </BendPoint>
       </Relationship>
-      <Relationship type="Dependency" first="4" second="5">
-        <Label>
-        </Label>
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-        <BendPoint relativeToStartShape="True">
-          <X>451</X>
-          <Y>1029</Y>
-        </BendPoint>
-      </Relationship>
-      <Relationship type="Generalization" first="6" second="2">
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-      </Relationship>
-      <Relationship type="Association" first="2" second="7">
+      <Relationship type="Association" first="6" second="2">
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Bidirectional</Direction>
         <AssociationType>Composition</AssociationType>
       </Relationship>
-      <Relationship type="Dependency" first="8" second="9">
-        <Label>
-        </Label>
+      <Relationship type="Association" first="6" second="7">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
-      </Relationship>
-      <Relationship type="Dependency" first="8" second="10">
-        <Label>
-        </Label>
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-      </Relationship>
-      <Relationship type="Association" first="7" second="8">
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
-        <BendPoint relativeToStartShape="False">
-          <X>951</X>
-          <Y>456</Y>
-        </BendPoint>
         <Direction>Bidirectional</Direction>
-        <AssociationType>Aggregation</AssociationType>
+        <AssociationType>Composition</AssociationType>
       </Relationship>
     </Relationships>
   </ProjectItem>
