@@ -92,7 +92,7 @@
         <Name>Cliente</Name>
         <Access>Public</Access>
         <Location left="658" top="334" />
-        <Size width="219" height="315" />
+        <Size width="312" height="315" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private String nome</Member>
         <Member type="Field">private String cpf</Member>
@@ -106,7 +106,7 @@
         <Member type="Method">public void ordenarCompras()</Member>
         <Member type="Method">public int verificadorPontos()</Member>
         <Member type="Method">public int calcularPontos()</Member>
-        <Member type="Method">public void addMultiplicador(IaceleradorPts acelerador)</Member>
+        <Member type="Method">public void addMultiplicador(AceleradorEnum multi)</Member>
         <Member type="Method">public String descricao()</Member>
         <Modifier>None</Modifier>
       </Entity>
@@ -123,16 +123,12 @@
     </Entities>
     <Relationships>
       <Relationship type="Association" first="2" second="1">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Bidirectional</Direction>
         <AssociationType>Composition</AssociationType>
       </Relationship>
       <Relationship type="Association" first="1" second="0">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Bidirectional</Direction>
@@ -159,12 +155,16 @@
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="6" second="2">
+        <Label>
+        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Bidirectional</Direction>
         <AssociationType>Composition</AssociationType>
       </Relationship>
       <Relationship type="Association" first="6" second="7">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Bidirectional</Direction>
