@@ -1,3 +1,9 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -10,18 +16,51 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class App {
-    static final String arquivo = "memoria.txt";
+    static final String arquivo = "memoria.bin";
     static Scanner teclado = new Scanner(System.in);
     static Bilhete bilhete;
     static Cliente clienteAtual;
     static Map<String, Cliente> clientes = new HashMap<>();
 
     public static void lerArquivo() {
-        // TODO Implementar.
+        Map<String, Cliente> auxClientes = new HashMap<>();
+        ObjectInputStream leitorObj;
+        FileInputStream dados;
+        try {
+            dados = new FileInputStream(arquivo);
+            leitorObj = new ObjectInputStream(dados);
+            while (dados.available() != 0) {
+                Cliente cliente = (Cliente) leitorObj.readObject();
+                auxClientes.put(cliente.getCpf(), cliente);
+            }
+            clientes = (HashMap<String, Cliente>) auxClientes;
+        } catch (FileNotFoundException e) {
+            System.out.println("Arquivo de leitura ainda não existe...");
+        } catch (IOException e) {
+            System.out.println("Erro na leitura do arquivo...");
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Erro na leitura do arquivo. Classe não encontrada...");
+        }
+
     }
 
     public static void gravarArquivo() {
-        // TODO Implementar.
+        ObjectOutputStream gravadorObj;
+        try {
+            gravadorObj = new ObjectOutputStream(new FileOutputStream(arquivo));
+            for (Cliente c : clientes.values()) {
+                gravadorObj.writeObject(c);
+            }
+            gravadorObj.flush();
+            gravadorObj.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Erro ao tentar encontrar arquivo de salvamento...");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Erro no salvamento do sistema...");
+            e.printStackTrace();
+        }
     }
 
     public static String codBilhete() {
@@ -34,22 +73,23 @@ public class App {
         System.out.println("====================");
         System.out.println("Insira a Data:");
         System.out.println("Digite Ano:");
-        int ano = teclado.nextInt();
-        if (ano < 1904 || ano > 2100) throw new DateTimeException(null);
+        int ano = Integer.parseInt(teclado.nextLine());
+        if (ano < 1904 || ano > 2100)
+            throw new DateTimeException(null);
         System.out.println("Digite Mês:");
-        int mes = teclado.nextInt();
+        int mes = Integer.parseInt(teclado.nextLine());
         System.out.println("Digite Dia:");
-        int dia = teclado.nextInt();
+        int dia = Integer.parseInt(teclado.nextLine());
         return LocalDate.of(ano, mes, dia);
     }
 
     public static Trecho trechoBilhete() {
         System.out.println("Digite o Código do Trecho:");
-        String cod = teclado.next();
+        String cod = teclado.nextLine();
         System.out.println("Digite a Origem do Trecho:");
-        String origem = teclado.next();
+        String origem = teclado.nextLine();
         System.out.println("Digite o Destino do Trecho:");
-        String destino = teclado.next();
+        String destino = teclado.nextLine();
         return new Trecho(cod, origem, destino);
     }
 
@@ -60,7 +100,7 @@ public class App {
         Trecho trecho = trechoBilhete();
         LocalDate data = data();
         System.out.println("Digite o valor base:");
-        double valor = teclado.nextDouble();
+        double valor = Double.parseDouble(teclado.nextLine());
 
         return new Voo(trecho, data, valor);
     }
@@ -73,7 +113,7 @@ public class App {
             System.out.println("1 - Adicionar mais Voo");
             System.out.println("2 - Remover Voo");
             System.out.println("0 - Continuar");
-            opcao = teclado.next();
+            opcao = teclado.nextLine();
             switch (opcao) {
                 case "1":
                     bilhete.adicionarVoo(vooBilhete());
@@ -85,7 +125,7 @@ public class App {
                         System.out.println("      AeroLine      ");
                         System.out.println("====================");
                         System.out.println("Digite o código do Voo para remover:");
-                        System.out.println(bilhete.removerVoo(teclado.next()) ? "Removido" : "Não Encontrado");
+                        System.out.println(bilhete.removerVoo(teclado.nextLine()) ? "Removido" : "Não Encontrado");
                     }
                     break;
                 case "0":
@@ -118,7 +158,7 @@ public class App {
             System.out.println("2 - Bilhete Fidelidade");
             System.out.println("3 - Bilhete Promocional");
             System.out.println("0 - Sair");
-            opcao = teclado.next();
+            opcao = teclado.nextLine();
 
             try {
                 switch (opcao) {
@@ -130,7 +170,7 @@ public class App {
                         System.out.println(bilhete.descricao());
                         clienteAtual.comprarBilhete(bilhete);
                         System.out.println("Digite qualquer coisa para continuar...");
-                        teclado.next();
+                        teclado.nextLine();
                         break;
                     case "2":
                         if (clienteAtual.verificadorPontos() > 0) {
@@ -145,7 +185,7 @@ public class App {
                         }
 
                         System.out.println("Digite qualquer coisa para continuar...");
-                        teclado.next();
+                        teclado.nextLine();
                         break;
                     case "3":
                         bilhete = new BilhetePromocional(codBilhete(), LocalDate.now(), vooBilhete());
@@ -155,7 +195,7 @@ public class App {
                         System.out.println(bilhete.descricao());
                         clienteAtual.comprarBilhete(bilhete);
                         System.out.println("Digite qualquer coisa para continuar...");
-                        teclado.next();
+                        teclado.nextLine();
                         break;
                     case "0":
                         System.out.println("Saindo...");
@@ -169,10 +209,15 @@ public class App {
                 System.out.println("====================");
                 System.out.println("Data com valor Invalido");
                 System.out.println("Tente novamente...");
-            } catch (InputMismatchException e) {
+            } catch (InputMismatchException | NumberFormatException e) {
                 System.out.println("      AeroLine      ");
                 System.out.println("====================");
-                System.out.println("Valor base do voo Invalido");
+                System.out.println("Valor Invalido");
+                System.out.println("Tente novamente...");
+            } catch (NullPointerException e) {
+                System.out.println("      AeroLine      ");
+                System.out.println("====================");
+                System.out.println("Valor não pode ser nulo ou em branco.");
                 System.out.println("Tente novamente...");
             }
 
@@ -183,9 +228,9 @@ public class App {
         System.out.println("      AeroLine      ");
         System.out.println("====================");
         System.out.println("Digite o seu nome:");
-        String nome = teclado.next();
+        String nome = teclado.nextLine();
         System.out.println("Digite o seu CPF:");
-        String cpf = teclado.next();
+        String cpf = teclado.nextLine();
         return new Cliente(nome, cpf);
     }
 
@@ -200,7 +245,7 @@ public class App {
             System.out.println("3 - Bilhetes dos últimos 12 meses");
             System.out.println("4 - Relatório do Cliente");
             System.out.println("0 - Sair");
-            opcao = teclado.next();
+            opcao = teclado.nextLine();
             switch (opcao) {
                 case "1":
                     menuCompra();
@@ -215,7 +260,7 @@ public class App {
                     System.out.println("2 - Preto");
                     System.out.println("3 - Padrão");
                     System.out.println("0 - Sair");
-                    String plano = teclado.next();
+                    String plano = teclado.nextLine();
                     if (plano.contains("1")) {
                         clienteAtual.addMultiplicador(AceleradorEnum.PRATA);
                     } else if (plano.contains("2")) {
@@ -243,7 +288,7 @@ public class App {
                         }
                     }
                     System.out.println("Digite qualquer coisa para continuar...");
-                    teclado.next();
+                    teclado.nextLine();
 
                     break;
                 case "4":
@@ -252,7 +297,7 @@ public class App {
                     System.out.println("Relatório:");
                     System.out.println(clienteAtual.descricao());
                     System.out.println("Digite qualquer coisa para continuar...");
-                    teclado.next();
+                    teclado.nextLine();
                     break;
                 case "0":
                     clientes.put(clienteAtual.getCpf(), clienteAtual);
@@ -277,7 +322,7 @@ public class App {
             System.out.println("2 - Voos por cidade a partir de um data, com mais de 100 reservas");
             System.out.println("3 - Valor total arrecadado com bilhetes");
             System.out.println("0 - Sair");
-            opcao = teclado.next();
+            opcao = teclado.nextLine();
             switch (opcao) {
                 case "1":
                     System.out.println("      AeroLine      ");
@@ -292,34 +337,41 @@ public class App {
                             : "Não temos cliente com mais pontos acumulados nos últimos 12 meses");
 
                     System.out.println("Digite qualquer coisa para continuar...");
-                    teclado.next();
+                    teclado.nextLine();
                     break;
                 case "2":
                     System.out.println("      AeroLine      ");
                     System.out.println("====================");
                     System.out.println("Digite a cidade:");
-                    String cidade = teclado.next();
-                    System.out.println("Digite a data");
-                    LocalDate data = data();
+                    String cidade = teclado.nextLine();
+                    LocalDate data;
+                    try {
+                        data = data();
+                        // Stream de clientes que mapeia cada cliente para stream de compras que também
+                        // mapeia um stream de voo, por fim transforma em uma lista voos completa.
 
-                    // TODO Verificar se interpretação do requisito esta certa.
-                    // Stream de clientes que mapeia cada cliente para stream de compras que também
-                    // mapeia um stream de voo, por fim transforma em uma lista voos completa.
+                        voos = clientes.values().stream()
+                                .flatMap(c -> c.getCompras().stream().flatMap(b -> b.getReservas().stream()))
+                                .collect(Collectors.toList());
 
-                    voos = clientes.values().stream()
-                            .flatMap(c -> c.getCompras().stream().flatMap(b -> b.getReservas().stream()))
-                            .collect(Collectors.toList());
+                        voos = voos.stream().filter(v -> v.toString().contains(cidade))
+                                .filter(v -> v.toString().contains(data.toString())).toList();
+                        if (voos.size() > 100) {
+                            voos.stream().forEach(v -> System.out.println(v.toString()));
+                        } else {
+                            System.out.println("Não existe voos com estes critérios");
+                        }
 
-                    voos = voos.stream().filter(v -> v.toString().contains(cidade))
-                            .filter(v -> v.toString().contains(data.toString())).toList();
-                    if (voos.size() > 100) {
-                        voos.stream().forEach(v -> System.out.println(v.toString()));
-                    } else {
-                        System.out.println("Não existe voos com estes critérios");
+                        System.out.println("Digite qualquer coisa para continuar...");
+                        teclado.nextLine();
+                    } catch (DateTimeException e) {
+                        System.out.println("      AeroLine      ");
+                        System.out.println("====================");
+                        System.out.println("Data com valor Invalido");
+                        System.out.println("Tente novamente...");
+
                     }
 
-                    System.out.println("Digite qualquer coisa para continuar...");
-                    teclado.next();
                     break;
                 case "3":
                     System.out.println("      AeroLine      ");
@@ -327,7 +379,7 @@ public class App {
                     double totalArrecadado = clientes.values().stream().mapToDouble(c -> c.getTotalValorGasto()).sum();
                     System.out.println("Total arrecadado : " + totalArrecadado);
                     System.out.println("Digite qualquer coisa para continuar...");
-                    teclado.next();
+                    teclado.nextLine();
                     break;
                 case "0":
                     System.out.println("Saindo...");
@@ -341,6 +393,7 @@ public class App {
 
     public static void main(String[] args) {
         String opcao;
+        lerArquivo();
         do {
             System.out.println("      AeroLine      ");
             System.out.println("====================");
@@ -350,40 +403,48 @@ public class App {
             System.out.println("3 - Remover Cliente");
             System.out.println("4 - Relatórios Geral");
             System.out.println("0 - Sair");
-            opcao = teclado.next();
+            opcao = teclado.nextLine();
             switch (opcao) {
                 case "1":
-                    clienteAtual = Criarcliente();
-                    System.out.println("      AeroLine      ");
-                    System.out.println("====================");
-                    if (clientes.containsKey(clienteAtual.getCpf())) {
-                        System.out.println("Este CPF já existe ,Cliente não foi criado...");
-                    } else {
-                        System.out.println("Cliente criado...");
-                        clientes.put(clienteAtual.getCpf(), clienteAtual);
+                    try {
+                        clienteAtual = Criarcliente();
+                        System.out.println("      AeroLine      ");
+                        System.out.println("====================");
+                        if (clientes.containsKey(clienteAtual.getCpf())) {
+                            System.out.println("Este CPF já existe ,Cliente não foi criado...");
+                        } else {
+                            System.out.println("Cliente criado...");
+                            clientes.put(clienteAtual.getCpf(), clienteAtual);
+                        }
+                        System.out.println("Digite qualquer coisa para continuar...");
+                        teclado.nextLine();
+                    } catch (NullPointerException e) {
+                        System.out.println("      AeroLine      ");
+                        System.out.println("====================");
+                        System.out.println("Valor não pode ser nulo ou em branco.");
+                        System.out.println("Tente novamente...");
                     }
-                    System.out.println("Digite qualquer coisa para continuar...");
-                    teclado.next();
+
                     break;
                 case "2":
                     System.out.println("      AeroLine      ");
                     System.out.println("====================");
                     System.out.println("Digite o CPF do cliente:");
-                    String cpf = teclado.next();
+                    String cpf = teclado.nextLine();
                     if (clientes.containsKey(cpf)) {
                         clienteAtual = clientes.get(cpf);
                         menuCliente();
                     } else {
                         System.out.println("O cliente não foi encontrado...");
                         System.out.println("Digite qualquer coisa para continuar...");
-                        teclado.next();
+                        teclado.nextLine();
                     }
                     break;
                 case "3":
                     System.out.println("      AeroLine      ");
                     System.out.println("====================");
                     System.out.println("Digite o CPF do cliente que deseja remover:");
-                    String cpfRemove = teclado.next();
+                    String cpfRemove = teclado.nextLine();
                     if (clientes.containsKey(cpfRemove)) {
                         clientes.remove(cpfRemove);
                         System.out.println("Cliente foi removido...");
@@ -391,7 +452,7 @@ public class App {
                         System.out.println("O cliente não foi encontrado...");
                     }
                     System.out.println("Digite qualquer coisa para continuar...");
-                    teclado.next();
+                    teclado.nextLine();
                     break;
                 case "4":
                     menuRelatorio();
@@ -405,6 +466,6 @@ public class App {
                     break;
             }
         } while (!opcao.contains("0"));
-
+        gravarArquivo();
     }
 }

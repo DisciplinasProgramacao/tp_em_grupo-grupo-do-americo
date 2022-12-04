@@ -1,7 +1,8 @@
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Voo {
+public class Voo implements Serializable{
 
 	private Trecho trecho;
 	private LocalDate data;

@@ -1,10 +1,11 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 
 
-public abstract class Bilhete implements Comparable<Bilhete> {
+public abstract class Bilhete implements Comparable<Bilhete> , Serializable {
 
 	protected String codBilhete;
 	protected double preco;
@@ -14,6 +15,7 @@ public abstract class Bilhete implements Comparable<Bilhete> {
 	protected final double ACRESCIMO_DIVERSOS_VOO = 0.5;
 	
 	public Bilhete(String codBilhete, LocalDate data, Voo voo) {
+		if (codBilhete.isBlank())throw new NullPointerException();
 		this.codBilhete = codBilhete; 
 		this.data = data;
 		this.reservas.add(voo);

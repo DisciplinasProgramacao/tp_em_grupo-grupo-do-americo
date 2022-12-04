@@ -1,10 +1,11 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Cliente {
+public class Cliente implements Serializable{
 
 	private String nome;
 	private String cpf;
@@ -16,6 +17,7 @@ public class Cliente {
 	private final int REF_PONTOS = 10500;
 
 	public Cliente(String nome, String cpf) {
+		if (nome.isBlank() || cpf.isBlank())throw new NullPointerException();
 		this.nome = nome;
 		this.cpf = cpf;
 		this.compras = new ArrayList<Bilhete>();
