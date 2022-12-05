@@ -31,8 +31,7 @@ public class Cliente implements Serializable{
 
 	/**
 	 * Metodo para guardar bilhete na lista de compra.
-	 * recebe como parametro um bilhete.
-	 * @param bilhete
+	 * @param bilhete a ser comprado e adicionado na lista de compras.
 	 */
 	public void comprarBilhete(Bilhete bilhete) {
 		this.compras.add(bilhete);
@@ -76,8 +75,7 @@ public class Cliente implements Serializable{
 
 	/**
 	 * Metodo utilizado para adicionar um  multiplicador de pontos para o cliente.
-	 * Parametro multi que é o multiplicador de pontos.
-	 * @param multi
+	 * @param multi multiplicador de pontos que o cliente deseja.
 	 */
 	public void addMultiplicador(AceleradorEnum multi) {
 		this.multiplicador = multi;

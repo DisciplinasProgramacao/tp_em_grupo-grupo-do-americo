@@ -35,8 +35,7 @@ public abstract class Bilhete implements Comparable<Bilhete> , Serializable {
 
 	/**
 	 * Metodo utiliza-do para adicionar um novo voo na lista de reservas.
-	 * parametro voo que será o voo guardado.
-	 * @param voo
+	 * @param voo que será guardado.
 	 */
 	public void adicionarVoo(Voo voo) {
 		this.reservas.add(voo);
@@ -46,8 +45,7 @@ public abstract class Bilhete implements Comparable<Bilhete> , Serializable {
 
 	/**
 	 * Método para remover voo da lista de reservas.
-	 * parametro codigo usado para remover voo especifico.
-	 * @param codigo 
+	 * @param codigo usado para remover voo especifico.
 	 */
 	public boolean removerVoo(String codigo) {
 		boolean removido = false;

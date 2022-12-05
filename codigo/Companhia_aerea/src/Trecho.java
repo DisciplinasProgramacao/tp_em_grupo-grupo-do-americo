@@ -13,7 +13,9 @@ public class Trecho implements Serializable{
 		this.destino = destino;
 	}
 
-
+	/**
+	 * ver origem e destino do trecho
+	 */
 	public String toString() {
 		return this.codigo +" ("+this.origem+"/"+this.destino +")";
 	}
