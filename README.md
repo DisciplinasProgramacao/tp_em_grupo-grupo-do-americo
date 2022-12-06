@@ -6,7 +6,6 @@ desenvolvidas por módulos que serão integrados ao decorrer do projeto.
 ## Alunos integrantes da equipe
 
 * Américo Luiz dos Santos
-* Diego Henrique de Toledo
 * Thiago Gomes Teixeira
 * Wesley Henrique de Lima
 
